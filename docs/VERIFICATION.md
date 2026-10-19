@@ -1,6 +1,6 @@
-# 发布前验证记录
+# 发布验证记录
 
-日期：2026-10-19。本记录针对本地发布候选；尚未上传 GitHub，尚未执行公开仓库重新克隆验收。
+日期：2026-10-19。已完成本地候选检查、GitHub 上传及公开克隆 / ZIP 下载复验。仓库：[web3olalala/FitBuddy](https://github.com/web3olalala/FitBuddy)，许可证：MIT。
 
 ## 源码与隐私检查
 
@@ -47,8 +47,21 @@ PLAYWRIGHT_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Googl
 
 测试仍使用新建的隔离浏览器环境。已通过训练、历史、计划、成就、统计、跨浏览器重开、离线、备份恢复、失败事务和资源更新场景。默认 `npx playwright install chromium` 的完整下载流程本次未验证完成；不能据此宣称所有系统或浏览器均已通过。
 
+## 从 GitHub 下载后的复验
+
+验证的源码提交：[d0e183d](https://github.com/web3olalala/FitBuddy/commit/d0e183d2e6dd364c9748d2c2fccc231fadad036a)。本记录随后单独更新，应用源码未变更。
+
+- 使用公开 HTTPS URL 克隆，不使用 Git 凭据；另外下载 GitHub 的 main 分支 ZIP。
+- 解压并逐文件比较，50 个发布文件与公开克隆内容完全一致，不含本地笔记、个人数据或依赖目录。
+- ZIP 解压后、未安装依赖时执行 `npm start`：首页 HTTP 200；隔离 Chrome 验证初始空库、首次训练、刷新保留及完成训练，无页面异常。
+- 在公开克隆目录执行 `npm ci`：成功，安装 3 个开发依赖包，npm audit 报告 0 个已知漏洞。此次复用此前的 npm 下载缓存，不复制 node_modules；锁文件未被修改。
+- `npm run check`：通过。
+- `npm test`：18/18 通过，0 失败、0 跳过。
+- 使用本机 Chrome 执行 `npm run test:browser`：32/32 通过，0 失败、0 跳过，约 79 秒。
+- GitHub API 确认仓库公开、默认分支 main、识别许可证 MIT。提交采用 GitHub noreply 邮箱，未公开本机配置的私人邮箱。
+- 验证环境仍为本机 nvm Node.js 22.20.0 和已安装的 Chrome，未下载额外浏览器。
+
 ## 尚未完成的验收
 
-- GitHub 上传、公开仓库克隆和 ZIP 下载后的复验：待执行；维护者已确认 MIT 许可证与署名，SSH 的 private 别名已核实为仓库所有者账号。
 - Windows、Linux 原生环境、Safari、iPhone / 安卓真机安装与系统键盘：本次未执行，不能由 macOS Chromium 结果推断通过。
 - 实际线上部署验证：本次不发布网站，不将旧报告的成功记录计入本次验证。
